@@ -1,0 +1,3 @@
+Manifest-Version: 1.0
+client.Main-Class: com.yz.snake03.StartGame
+
