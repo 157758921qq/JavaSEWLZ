@@ -18,7 +18,6 @@ import java.util.Random;
  */
 public class TankPanel extends JPanel {
 
-
     Tank tank;
     NetClient nc;
     //client.EnemyTank enemyTank = new client.EnemyTank(400, 350, client.Dir.U, this);
@@ -30,6 +29,7 @@ public class TankPanel extends JPanel {
     Random rd = new Random();
 //    client.Wall w1 = new client.Wall(100, 200, 20, 150, this);
 //    client.Wall w2 = new client.Wall(500, 100, 300, 20, this);
+    List<Tank> tanks = new ArrayList<>();
 
 
     public TankPanel() {
@@ -107,6 +107,10 @@ public class TankPanel extends JPanel {
 
 //        if(null != missile)
 //            missile.draw(g);
+
+        for( Tank t : tanks) {
+            t.draw(g);
+        }
 
 
     }

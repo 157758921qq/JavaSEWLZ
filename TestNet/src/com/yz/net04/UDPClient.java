@@ -17,6 +17,7 @@ import java.net.SocketException;
 public class UDPClient {
     public static void main(String[] args) {
         DatagramSocket ds = null;
+
         long n = 125698L;
         //写到内存中的字节数组中
         ByteArrayOutputStream baos = new ByteArrayOutputStream();

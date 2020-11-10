@@ -43,7 +43,8 @@ public class Tank {
 
         Color c = g.getColor();
         g.setColor(Color.MAGENTA);
-        g.drawString("id:"+id, x, y-15);
+        g.setFont(new Font("微软雅黑", 10, 15));
+        g.drawString("TankId:"+id, x-30, y-15);        //画坦克的ID
         g.fillOval(x, y, Tank.WIDTH, Tank.HEIGHT);
         g.setColor(c);
 

@@ -5,103 +5,101 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.*;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Auther:yangwlz
- * @Date: 11:27 : 2020/11/7
+ * @Date: 9:55 : 2020/11/10
  * @Description: server
  * @version: 1.0
  */
 public class TankServer {
-    static int ID = 100;
     public static final int TCP_PORT = 8888;
-    public static final int UDP_PORT = 6666;
+    public static final int UDP_PORT = 6666;               //监听在UDP的6666端口
+    List<Client> clients = new ArrayList<>();
+    static int ID = 100;
 
-    java.util.List<Client> clients = new ArrayList<>();
+    public static void main(String[] args) {
+        new TankServer().init();
+    }
 
     public void init() {
-        new Thread(new UDPThread()).start();
+        new Thread(new UDPThread()).start();              //UDP监听的线程启动
 
         ServerSocket ss = null;
+        Socket s = null;
         try {
             ss = new ServerSocket(TCP_PORT);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        while (true) {
-            Socket s = null;
+        while(true){
             try {
                 s = ss.accept();
+  System.out.println("有1客户端连接上来,IP= " +s.getInetAddress().getHostAddress() +", 客户端的TCP端口= "+ s.getPort());
+
                 DataInputStream dis = new DataInputStream(s.getInputStream());
-                int udpPort = dis.readInt();
-                String ip = s.getInetAddress().getHostAddress();
+                String IP = s.getInetAddress().getHostAddress();
 
-                Client c = new Client(ip, udpPort);
+                int clientUdpPort = dis.readInt();                                   //读到客户端的UDP port
+                Client c = new Client(IP, clientUdpPort);
                 clients.add(c);
-
                 DataOutputStream dos = new DataOutputStream(s.getOutputStream());
                 dos.writeInt(ID++);
-
-                s.close();
-                System.out.println("客户端连接上来： " + s.getInetAddress() + " : " + s.getPort() +"UDP_PORT"+ udpPort);
             } catch (IOException e) {
                 e.printStackTrace();
-            } finally {
-                if(s != null) {
-                    try {
-                        s.close();
-                        s = null;
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                }
             }
-
         }
     }
 
-    public static void main(String[] args) {
-        new TankServer().init();
 
-    }
 
-    //每个client连接上来后，都需要在server端保存
+
     class Client {
         String ip;
-        int udpPort;
+        int clientUdpPort;
 
-        public Client(String ip, int udpPort) {
+        public Client(String ip, int clientUdpPort) {
             this.ip = ip;
-            this.udpPort = udpPort;
+            this.clientUdpPort = clientUdpPort;
         }
     }
 
+
+
+    //Udp线程用来接收客户端发送过来的UDP数据包，并转发给其它的客户端
     class UDPThread implements Runnable {
-        byte[] buf = new byte[1024];
+
+        byte[] buf = new byte[1024*5];
 
         @Override
         public void run() {
             DatagramSocket ds = null;
             try {
-                 ds = new DatagramSocket(UDP_PORT);
+                ds = new DatagramSocket(UDP_PORT);
             } catch (SocketException e) {
                 e.printStackTrace();
             }
-
- System.out.println("UDP线程已经启动，UDP端口：" + UDP_PORT);
-
-            while(ds != null) {
+System.out.println("服务器端UDP监听启动，UDP_PORT= " + UDP_PORT);
+            //接收客户端发送过来的UDP接口
+            while (ds != null) {
                 DatagramPacket dp = new DatagramPacket(buf, buf.length);
                 try {
+                    //拿到客户端发送过来的UDP数据包
                     ds.receive(dp);
-                    System.out.println("收到udp包");
+
+                    //转发给队友
+                    for (int i = 0; i < clients.size(); i++) {
+                        Client c = clients.get(i);
+                        dp.setSocketAddress(new InetSocketAddress(c.ip, c.clientUdpPort));
+                        ds.send(dp);
+                    }
+ System.out.println("a packet received");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         }
     }
-
 }
