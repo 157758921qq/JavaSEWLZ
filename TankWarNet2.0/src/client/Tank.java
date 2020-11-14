@@ -210,7 +210,7 @@ public class Tank {
         }
 
         if(oldDir != dir) {             //方向改变了，坦克移动的消息发给服务器端
-            TankMoveMsg tankMoveMsg = new TankMoveMsg(this.id, this.dir);
+            TankMoveMsg tankMoveMsg = new TankMoveMsg(x, y, this.id, this.dir);
             tp.nc.send(tankMoveMsg);
 
         }

@@ -70,13 +70,29 @@ public class TankNewMsg implements Msg{
 System.out.println("收到自己发给自己的数据包，丢掉");
                 return;
             }
+
             int x = dis.readInt();
             int y = dis.readInt();
             Dir dir = Dir.values()[dis.readInt()];
-System.out.println("id= "+id+" ,x= "+x+" ,y= "+y+" ,dir= "+ dir);
-            Tank t = new Tank(x, y, dir, tp);
-            t.id = id;
-            tp.tanks.add(t);
+//System.out.println("id= "+id+" ,x= "+x+" ,y= "+y+" ,dir= "+ dir);
+
+            boolean exist = false;
+            for (int i = 0; i < tp.tanks.size(); i++) {
+                Tank t = tp.tanks.get(i);
+                if(t.id == id) {
+                    exist = true;
+                    break;
+                }
+            }
+            if(!exist) {
+
+                TankNewMsg tnMsg = new TankNewMsg(tp.tank);
+                tp.nc.send(tnMsg);
+
+                Tank t = new Tank(x, y, dir, tp);
+                t.id = id;
+                tp.tanks.add(t);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

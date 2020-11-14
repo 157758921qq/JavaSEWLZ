@@ -19,14 +19,11 @@ import java.net.SocketException;
  */
 public class NetClient {
     TankPanel tp;
-    public static int UDP_PORT = 2220;
-
     int udpPort;
     DatagramSocket ds = null;
 
     public NetClient(TankPanel tp) {
         this.tp = tp;
-        udpPort = UDP_PORT++;
         try {
             ds = new DatagramSocket(udpPort);
         } catch (SocketException e) {
