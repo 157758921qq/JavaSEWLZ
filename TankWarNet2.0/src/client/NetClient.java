@@ -19,10 +19,11 @@ import java.net.SocketException;
  */
 public class NetClient {
     TankPanel tp;
-    int udpPort;
+    int udpPort = 2221;
     DatagramSocket ds = null;
 
     public NetClient(TankPanel tp) {
+
         this.tp = tp;
         try {
             ds = new DatagramSocket(udpPort);
@@ -35,7 +36,7 @@ public class NetClient {
         Socket s = null;
         try {
             s = new Socket(ip, tcpPort);
-            System.out.println("我连接上了Server端");
+//System.out.println("我连接上了Server端");
             DataOutputStream dos = new DataOutputStream(s.getOutputStream());
             dos.writeInt(udpPort);       //将自己的UDP port发送给服务器
 
@@ -57,8 +58,8 @@ public class NetClient {
         }
 
 
-        TankNewMsg newMsg = new TankNewMsg(tp.tank);
-        this.send(newMsg);
+        TankNewMsg msg = new TankNewMsg(tp.tank);
+        this.send(msg);
 
         new Thread(new UDPRecvThread()).start();
     }
@@ -70,7 +71,7 @@ public class NetClient {
 
     //起一UDP线程用来接收从服务转发过来的UDP数据包
     class UDPRecvThread implements Runnable {
-        byte[] buf = new byte[1024 * 5];
+        byte[] buf = new byte[1024];
 
         @Override
         public void run() {
