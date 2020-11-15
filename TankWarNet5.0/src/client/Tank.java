@@ -14,6 +14,7 @@ public class Tank {
     int x, y;                                                //坦克位置
     boolean bL = false, bU = false, bR = false, bD = false;  //记录左上右下的键是否被按下
     Dir dir;
+    Dir ptDir = Dir.D;
     public static final int speed = 20;
     public static final int WIDTH = 30;
     public static final int HEIGHT = 30;
@@ -50,7 +51,7 @@ public class Tank {
 
             bb.draw(g);
             //根据炮筒的方向，画一条直线
-            switch (dir) {
+            switch (ptDir) {
                 case L:
                     g.drawLine(x + Tank.WIDTH / 2, y + Tank.HEIGHT / 2, x-5, y+Tank.HEIGHT / 2);
                     break;
@@ -89,7 +90,7 @@ public class Tank {
             bb.draw(g);
             //根据炮筒的方向，画一条直线
 
-            switch (dir) {
+            switch (ptDir) {
                 case L:
                     g.drawLine(x + Tank.WIDTH / 2, y + Tank.HEIGHT / 2, x-5, y+Tank.HEIGHT / 2);
                     break;
@@ -157,7 +158,7 @@ public class Tank {
                 y += speed;
                 break;
         }
-            //this.ptDir = dir;
+            this.ptDir = dir;
         //坦克越界检查
         checkBounds();
     }
@@ -210,9 +211,10 @@ public class Tank {
     }
 
     private Missile fire() {
+        if(!this.isLive) return null;
         int x = this.x + Tank.WIDTH / 2 - Missile.WIDTH / 2;
         int y = this.y + Tank.HEIGHT / 2 - Missile.HEIGHT / 2;
-        Missile missile = new Missile(this.id, x, y, this.dir, this.tp, isGood);
+        Missile missile = new Missile(this.id, x, y, this.ptDir, this.tp, isGood);
         this.tp.missileList.add(missile);
         MissileNewMsg msg = new MissileNewMsg(missile);
         tp.nc.send(msg);
@@ -250,7 +252,7 @@ public class Tank {
         }
 
         if(dir != oldDir) {             //方向改变了，坦克移动的消息发给服务器端
-            TankMoveMsg tankMoveMsg = new TankMoveMsg(x, y, this.id, this.dir);
+            TankMoveMsg tankMoveMsg = new TankMoveMsg(x, y, this.id, this.dir, ptDir);
             tp.nc.send(tankMoveMsg);
 
         }

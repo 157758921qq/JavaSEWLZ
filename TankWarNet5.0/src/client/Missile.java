@@ -134,7 +134,7 @@ public class Missile {
             MissileDeadMsg msg = new MissileDeadMsg(this.tankId, id);
             tp.nc.send(msg);
 
-           this.tp.explodeList.add(new Explode(t.x, t.y, this.tp));
+           //this.tp.explodeList.add(new Explode(t.x, t.y, this.tp));
             return true;
         }
         return false;

@@ -20,15 +20,17 @@ public class TankMoveMsg implements Msg {
     int x, y;
     int id;
     Dir dir;
+    Dir ptDir;
 
     public TankMoveMsg() {
     }
 
-    public TankMoveMsg(int x, int y, int id, Dir dir) {
+    public TankMoveMsg(int x, int y, int id, Dir dir, Dir ptDir) {
         this.x = x;
         this.y = y;
         this.id = id;
         this.dir = dir;
+        this.ptDir = ptDir;
     }
 
     public TankMoveMsg(TankPanel tp) {
@@ -45,6 +47,7 @@ public class TankMoveMsg implements Msg {
             dos.writeInt(x);
             dos.writeInt(y);
             dos.writeInt(dir.ordinal());
+            dos.writeInt(ptDir.ordinal());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -76,7 +79,7 @@ public class TankMoveMsg implements Msg {
             int y = dis.readInt();
 
             Dir dir = Dir.values()[dis.readInt()];
-
+            Dir ptDir = Dir.values()[dis.readInt()];
             //如果有这辆坦克，改变方向就ok
             //如果没有，new出坦克，添加进List中
             boolean exist = false;
@@ -84,6 +87,7 @@ public class TankMoveMsg implements Msg {
                 Tank t = tp.tanks.get(i);
                 if (t.id == id) {
                     t.dir = dir;
+                    t.ptDir = ptDir;
                     t.x = x;
                     t.y = y;
                     exist = true;
