@@ -19,7 +19,7 @@ import java.net.SocketException;
  */
 public class NetClient {
     TankPanel tp;
-    int udpPort = 2280;
+    int udpPort = 2257;
     DatagramSocket ds = null;
 
     public NetClient(TankPanel tp) {
@@ -123,6 +123,10 @@ public class NetClient {
                     break;
                 case Msg.MISSILE_DEAD_MSG:
                     msg = new MissileDeadMsg(NetClient.this.tp);
+                    msg.parse(dis);
+                    break;
+                case Msg.BLOOD_DECREASE_MSG:
+                    msg = new BloodDecreaseMsg(NetClient.this.tp);
                     msg.parse(dis);
                     break;
             }

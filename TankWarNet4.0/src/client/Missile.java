@@ -62,9 +62,7 @@ public class Missile {
             }
 
         }
-
         move();
-
     }
 
     private void move() {
@@ -110,7 +108,6 @@ public class Missile {
         if(x < 0 || x > TankClient.GAME_WIDTH || y<0 || y>TankClient.GAME_HEIGHT) {
             //子弹出界, 1.false之后不再draw 2。missileList中将子弹移除
             this.isLive = false;
-            //
         }
     }
 
@@ -126,12 +123,13 @@ public class Missile {
     public boolean hitWithTank(Tank t) {
         if(this.isLive && this.isGood != t.isGood && t.life>0 && this.getRect().intersects(t.getRect())) {
             t.life -= 20;
+            BloodDecreaseMsg msg1 = new BloodDecreaseMsg(t.id, t.bb.id);
+            tp.nc.send(msg1);
             if(t.life <= 0) {
-                //坦克死亡
-                t.die();
+                t.die();        //坦克死亡
             }
             this.isLive = false;
-            MissileDeadMsg msg = new MissileDeadMsg(tankId, id);
+            MissileDeadMsg msg = new MissileDeadMsg(this.tankId, id);
             tp.nc.send(msg);
             //this.tp.explodeList.add(new client.Explode(x,y,this.tp));
             return true;
