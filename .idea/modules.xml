@@ -6,7 +6,6 @@
       <module fileurl="file://$PROJECT_DIR$/CatchFish/CatchFish.iml" filepath="$PROJECT_DIR$/CatchFish/CatchFish.iml" />
       <module fileurl="file://$PROJECT_DIR$/JavaSE/JavaSE.iml" filepath="$PROJECT_DIR$/JavaSE/JavaSE.iml" />
       <module fileurl="file://$PROJECT_DIR$/JavaStudy.iml" filepath="$PROJECT_DIR$/JavaStudy.iml" />
-      <module fileurl="file://$PROJECT_DIR$/SnakeLession/SnakeLession.iml" filepath="$PROJECT_DIR$/SnakeLession/SnakeLession.iml" />
       <module fileurl="file://$PROJECT_DIR$/SnakePlus/SnakePlus.iml" filepath="$PROJECT_DIR$/SnakePlus/SnakePlus.iml" />
       <module fileurl="file://$PROJECT_DIR$/SnakePro/SnakePro.iml" filepath="$PROJECT_DIR$/SnakePro/SnakePro.iml" />
       <module fileurl="file://$PROJECT_DIR$/TankWar0.1/TankWar0.1.iml" filepath="$PROJECT_DIR$/TankWar0.1/TankWar0.1.iml" />
@@ -31,6 +30,7 @@
       <module fileurl="file://$PROJECT_DIR$/TestImageload/TestImageload.iml" filepath="$PROJECT_DIR$/TestImageload/TestImageload.iml" />
       <module fileurl="file://$PROJECT_DIR$/TestNet/TestNet.iml" filepath="$PROJECT_DIR$/TestNet/TestNet.iml" />
       <module fileurl="file://$PROJECT_DIR$/TestOOP/TestOOP.iml" filepath="$PROJECT_DIR$/TestOOP/TestOOP.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lesson01/lesson01.iml" filepath="$PROJECT_DIR$/lesson01/lesson01.iml" />
     </modules>
   </component>
 </project>

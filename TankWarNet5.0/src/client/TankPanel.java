@@ -65,7 +65,6 @@ public class TankPanel extends JPanel {
         //g.drawString("弹药数量= " + missileList.size(), 20, 20);
         //g.drawString("敌方坦克数量= " + enemyTankList.size(), 200, 20);
         g.setColor(c);
-
         this.setBackground(Color.CYAN);   //172, 220, 239
         tank.draw(g);
 

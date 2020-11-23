@@ -95,7 +95,6 @@ public class GamePanel extends JPanel {
     //这个方法底层直接调用，不用我们调
     @Override
     protected void paintComponent(Graphics g) {         //Graphics g是画笔
-        super.paintComponent(g);
         //面板是透明的，给面板设置一个背景色
         this.setBackground(new Color(172, 220, 239));
 

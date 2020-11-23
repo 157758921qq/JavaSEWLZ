@@ -1,9 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="JavaStudy:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/JavaStudy_jar</output-path>
-    <root id="archive" name="JavaStudy.jar">
-      <element id="module-output" name="SnakePro" />
-      <element id="module-output" name="JavaStudy" />
-    </root>
-  </artifact>
-</component>

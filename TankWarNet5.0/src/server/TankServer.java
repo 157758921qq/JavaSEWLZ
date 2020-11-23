@@ -38,10 +38,9 @@ public class TankServer {
         while(true){
             try {
                 s = ss.accept();
-  //System.out.println("有1客户端连接上来,IP= " +s.getInetAddress().getHostAddress() +", 客户端的TCP端口= "+ s.getPort());
+//System.out.println("有1客户端连接上来,IP= " +s.getInetAddress().getHostAddress() +", 客户端的TCP端口= "+ s.getPort());
 
                 DataInputStream dis = new DataInputStream(s.getInputStream());
-
                 String IP = s.getInetAddress().getHostAddress();
                 int clientUdpPort = dis.readInt();                                   //读到客户端的UDP port
                 Client c = new Client(IP, clientUdpPort);
@@ -53,7 +52,6 @@ public class TankServer {
             }
         }
     }
-
 
 
 
